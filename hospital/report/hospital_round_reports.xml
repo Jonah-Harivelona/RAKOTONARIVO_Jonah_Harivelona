@@ -1,0 +1,12 @@
+<odoo>
+.   <!-- Action du rapport -->
+        <record id="action_report_round_weekly" model="ir.actions.report">
+            <field name="name">Rapport PDF de la semaine</field>
+            <field name="model">hospital.round</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">hospital.report_round_weekly_template</field>
+            <field name="report_file">hospital.report_round_weekly_template</field>
+            <field name="binding_model_id" ref="model_hospital_round"/>
+            <field name="binding_type">report</field>
+        </record>
+</odoo>

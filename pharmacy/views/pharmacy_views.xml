@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Vue formulaire pour les pharmacies -->
+    <record id="view_pharmacy_form" model="ir.ui.view">
+        <field name="name">pharmacy.form</field>
+        <field name="model">pharmacy.pharmacy</field>
+        <field name="arch" type="xml">
+            <form string="Pharmacie">
+                <header>
+                    <button name="action_view_medicines" type="object" 
+                            class="oe_highlight" string="Voir les médicaments"/>
+                    <button name="action_view_orders" type="object" 
+                            string="Voir les commandes"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+                            <field name="active" widget="boolean_button" options="{'terminology': 'archive'}"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Nom de la pharmacie"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="code"/>
+                            <field name="partner_id"/>
+                            <field name="reorder_delay"/>
+                        </group>
+                        <group>
+                            <field name="medicine_count" widget="statinfo" string="Médicaments"/>
+                            <field name="low_stock_count" widget="statinfo" string="Stock faible"/>
+                            <field name="out_of_stock_count" widget="statinfo" string="Rupture de stock"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vue liste pour les pharmacies -->
+    <record id="view_pharmacy_list" model="ir.ui.view">
+        <field name="name">pharmacy.list</field>
+        <field name="model">pharmacy.pharmacy</field>
+        <field name="arch" type="xml">
+            <list string="Pharmacies">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="partner_id"/>
+                <field name="medicine_count"/>
+                <field name="low_stock_count"/>
+                <field name="out_of_stock_count"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Vue recherche pour les pharmacies -->
+    <record id="view_pharmacy_search" model="ir.ui.view">
+        <field name="name">pharmacy.search</field>
+        <field name="model">pharmacy.pharmacy</field>
+        <field name="arch" type="xml">
+            <search string="Rechercher des pharmacies">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="partner_id"/>
+                <filter string="Archivé" name="inactive" domain="[('active', '=', False)]"/>
+                <group expand="0" string="Regrouper Par">
+                    <filter string="Partenaire" name="partner" context="{'group_by': 'partner_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Vue formulaire pour les médicaments -->
+    <record id="view_medicine_form" model="ir.ui.view">
+        <field name="name">medicine.form</field>
+        <field name="model">pharmacy.medicine</field>
+        <field name="arch" type="xml">
+            <form string="Médicament">
+                <header>
+                    <button name="action_reorder" type="object" 
+                            string="Réapprovisionner" 
+                         />
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+                            <field name="active" widget="boolean_button" options="{'terminology': 'archive'}"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Nom du médicament"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="code"/>
+                            <field name="pharmacy_id"/> 
+                            <field name="category_id"/>
+                            <field name="manufacturer"/>
+                        </group>
+                        <group>
+                            <field name="price"/>
+                            <field name="stock_quantity"/>
+                            <field name="min_stock"/>
+                            <field name="reorder_point"/>
+                            <field name="state"/>
+                            <field name="next_available_date" />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description">
+                            <field name="description"/>
+                        </page>
+                        <page string="Médicaments équivalents">
+                            <field name="equivalent_medicine_ids" widget="many2many_tags"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vue liste pour les médicaments -->
+    <record id="view_medicine_list" model="ir.ui.view">
+        <field name="name">medicine.list</field>
+        <field name="model">pharmacy.medicine</field>
+        <field name="arch" type="xml">
+            <list string="Médicaments" decoration-danger="stock_quantity &lt; min_stock" decoration-info="state == 'reorder'">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="pharmacy_id"/>
+                <field name="category_id"/>
+                <field name="price"/>
+                <field name="stock_quantity"/>
+                <field name="min_stock"/>
+                <field name="state"/>
+                <field name="next_available_date"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Vue recherche pour les médicaments -->
+    <record id="view_medicine_search" model="ir.ui.view">
+        <field name="name">medicine.search</field>
+        <field name="model">pharmacy.medicine</field>
+        <field name="arch" type="xml">
+            <search string="Rechercher des médicaments">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="pharmacy_id"/>
+                <field name="category_id"/>
+                <filter string="Stock faible" name="low_stock" domain="[('state', '=', 'low')]"/>
+                <filter string="Rupture de stock" name="out_of_stock" domain="[('state', '=', 'out')]"/>
+                <filter string="En réapprovisionnement" name="reorder" domain="[('state', '=', 'reorder')]"/>
+                <group expand="0" string="Regrouper Par">
+                    <filter string="Pharmacie" name="pharmacy" />
+                    <filter string="Catégorie" name="category" context="{'group_by': 'category_id'}"/>
+                    <filter string="État" name="state" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Actions -->
+    <record id="action_pharmacy" model="ir.actions.act_window">
+        <field name="name">Pharmacies</field>
+        <field name="res_model">pharmacy.pharmacy</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_pharmacy_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Créer votre première pharmacie
+            </p>
+        </field>
+    </record>
+
+    <record id="action_medicine" model="ir.actions.act_window">
+        <field name="name">Médicaments</field>
+        <field name="res_model">pharmacy.medicine</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_medicine_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Créer votre premier médicament
+            </p>
+        </field>
+    </record>
+
+    <!-- Menus -->
+    <menuitem id="menu_pharmacy_root" 
+              name="Pharmacie" 
+              sequence="10"/>
+
+    <menuitem id="menu_pharmacy_pharmacy" 
+              name="Pharmacies" 
+              parent="menu_pharmacy_root" 
+              action="action_pharmacy" 
+              sequence="1"/>
+
+    <menuitem id="menu_pharmacy_medicine" 
+              name="Médicaments" 
+              parent="menu_pharmacy_root" 
+              action="action_medicine" 
+              sequence="2"/>
+
+</odoo> 

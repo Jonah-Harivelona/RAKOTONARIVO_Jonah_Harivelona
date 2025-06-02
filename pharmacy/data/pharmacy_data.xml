@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Séquence pour la numérotation des commandes -->
+        <record id="seq_pharmacy_order" model="ir.sequence">
+            <field name="name">Séquence Commande Pharmacie</field>
+            <field name="code">pharmacy.order</field>
+            <field name="prefix">CMD/%(year)s/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- Séquence pour la numérotation des stocks -->
+        <record id="seq_pharmacy_stock" model="ir.sequence">
+            <field name="name">Séquence Stock Pharmacie</field>
+            <field name="code">pharmacy.stock</field>
+            <field name="prefix">STK/%(year)s/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- Données de démonstration -->
+        <!-- <record id="pharmacy_category_1" model="pharmacy.medicine.category">
+            <field name="name">Antibiotiques</field>
+            <field name="code">ANTI</field>
+        </record> -->
+
+        <!-- <record id="pharmacy_category_2" model="pharmacy.medicine.category">
+            <field name="name">Analgésiques</field>
+            <field name="code">ANAL</field>
+        </record> -->
+
+        <!-- <record id="pharmacy_category_3" model="pharmacy.medicine.category">
+            <field name="name">Antiviraux</field>
+            <field name="code">ANTV</field>
+        </record> -->
+
+        <record id="pharmacy_demo_1" model="pharmacy.pharmacy">
+            <field name="name">Pharmacie Centrale</field>
+            <field name="code">PHC001</field>
+            <field name="partner_id" ref="base.res_partner_12"/>
+        </record>
+
+        <record id="medicine_demo_1" model="pharmacy.medicine">
+            <field name="name">Amoxicilline 500mg</field>
+            <field name="code">AMOX500</field>
+            <field name="pharmacy_id" ref="pharmacy_demo_1"/>
+            <field name="category_id" ref="pharmacy_category_1"/>
+            <field name="manufacturer">Laboratoire Demo</field>
+            <field name="description">Antibiotique pénicilline</field>
+            <field name="price">15.00</field>
+            <field name="stock_quantity">100</field>
+            <field name="state">available</field>
+        </record>
+
+        <record id="medicine_demo_2" model="pharmacy.medicine">
+            <field name="name">Paracétamol 500mg</field>
+            <field name="code">PARA500</field>
+            <field name="pharmacy_id" ref="pharmacy_demo_1"/>
+            <field name="category_id" ref="pharmacy_category_2"/>
+            <field name="manufacturer">Laboratoire Demo</field>
+            <field name="description">Antidouleur et antipyrétique</field>
+            <field name="price">5.00</field>
+            <field name="stock_quantity">200</field>
+            <field name="state">available</field>
+        </record>
+
+    </data>
+</odoo> 

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!-- Actions -->
+    <record id="action_pharmacy_medicine" model="ir.actions.act_window">
+        <field name="name">Medecine</field>
+        <field name="res_model">pharmacy.medicine</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+              
+    <!-- Vue formulaire pour les médicaments -->
+    <record id="view_medicine_form" model="ir.ui.view">
+        <field name="name">medicine.form</field>
+        <field name="model">pharmacy.medicine</field>
+        <field name="arch" type="xml">
+            <form string="Médicament">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="category_id"/>
+                            <field name="manufacturer"/>
+                        </group>
+                        <group>
+                            <field name="price"/>
+                            <field name="stock_quantity"/>
+                            <field name="state"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description">
+                            <field name="description"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vue liste pour les médicaments -->
+    <record id="view_medicine_list" model="ir.ui.view">
+        <field name="name">medicine.list</field>
+        <field name="model">pharmacy.medicine</field>
+        <field name="arch" type="xml">
+            <list string="Médicaments">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="category_id"/>
+                <field name="price"/>
+                <field name="stock_quantity"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Vue recherche pour les médicaments -->
+    <record id="view_medicine_search" model="ir.ui.view">
+        <field name="name">medicine.search</field>
+        <field name="model">pharmacy.medicine</field>
+        <field name="arch" type="xml">
+            <search string="Rechercher des médicaments">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="category_id"/>
+                
+                <group expand="0" string="Regrouper Par">
+                    <filter string="Catégorie" name="category" context="{'group_by': 'category_id'}"/>
+                    <filter string="État" name="state" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+</odoo> 

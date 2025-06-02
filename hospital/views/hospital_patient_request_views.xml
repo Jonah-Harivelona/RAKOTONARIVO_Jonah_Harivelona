@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+        <!-- Action  -->
+    <record id="hospital_patient_request_action" model="ir.actions.act_window">
+        <field name="name">Demande de consultation</field>
+        <field name="res_model">hospital.patient.request</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p>Créer une nouvelle demande de consultation pour un patient</p>
+        </field>
+    </record>
+    
+        <!-- Menu enfant -->
+    <menuitem 
+        id="hospital_patient_menu_1" 
+        name="Tous les demandes" 
+        action="hospital_patient_request_action"
+        parent="hospital_menu_root" 
+        sequence="6"
+    />
+
+    <!-- Vue liste -->
+   <record id="view_hospital_patient_request_list" model="ir.ui.view">
+        <field name="name">hospital.patient.request.list</field>
+        <field name="model">hospital.patient.request</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="patient_id"/>
+                <field name="doctor_id"/>
+                <field name="symptoms"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Vue formulaire -->
+   <record id="view_hospital_patient_request_form" model="ir.ui.view">
+        <field name="name">hospital.patient.request.form</field>
+        <field name="model">hospital.patient.request</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="patient_id"/>
+                        <field name="doctor_id"/>
+                        <field name="symptoms"/>
+                    </group> 
+
+                    <footer>
+                        <button name="action_submit" type="object" string="Soumettre la demande"/>
+ 
+                    </footer>     
+                </sheet>
+             </form>
+        </field>
+    </record>
+</odoo>

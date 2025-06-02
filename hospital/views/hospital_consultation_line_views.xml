@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+   
+      <record id="hospital_consultation_line_list_view" model="ir.ui.view">
+        <field name="name">hospital.consultation.line.list</field>
+        <field name="model">hospital.consultation.line</field>
+        <field name="arch" type="xml">
+            <list string="list">
+                <field name="consultation_id"/>
+                <field name="ligne_medicament_id"/>
+                <field name="price_unit"/>   
+                <field name="quantity"/>   
+                <field name="sub_total"/>      
+            </list>
+        </field>
+    </record>
+
+    <record id="hospital_consultation_line_form_view" model="ir.ui.view">
+        <field name="name">hospital.consultation.line.form</field>
+        <field name="model">hospital.consultation.line</field>
+        <field name="arch" type="xml">
+           <form string="consultation line Form">
+                <sheet>
+                    <group>
+                        <field name="consultation_id"/>  
+                        <field name="ligne_medicament_id"/>
+                        <field name="price_unit"/>   
+                        <field name="quantity"/>
+                        <field name="sub_total"/>    
+                    </group>
+                </sheet>    
+            </form>
+       </field>
+    </record>
+
+         <!-- Action window et menu -->
+    <record id="action_hospital_consultation_line" model="ir.actions.act_window">
+      <field name="name">consultation line</field>
+      <field name="res_model">hospital.consultation.line</field>
+      <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem 
+              id="menu_hospital_consultation_line"
+              name="Ligne de Consultation"
+              parent="hospital_menu_root"
+              action="action_hospital_consultation_line"
+              sequence="5"
+    />
+    
+</odoo> 
+

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Séquence pour les numéros de commande -->
+        <record id="seq_hospital_pharmacy_order" model="ir.sequence">
+            <field name="name">Séquence Commande Pharmacie Hôpital</field>
+            <field name="code">hospital.pharmacy.order</field>
+            <field name="prefix">HCMD/%(year)s/</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- Données de démonstration -->
+        <record id="hospital_pharmacy_order_demo_1" model="hospital.pharmacy.order">
+            <field name="hospital_id" ref="hospital.hospital_1"/>
+            <field name="pharmacy_id" ref="pharmacy.pharmacy_demo_1"/>
+            <field name="date_order" eval="(datetime.now() - timedelta(days=1)).strftime('%Y-%m-%d')"/>
+            <field name="expected_delivery_date" eval="(datetime.now() + timedelta(days=2)).strftime('%Y-%m-%d')"/>
+            <field name="state">draft</field>
+        </record>
+
+        <record id="hospital_pharmacy_order_line_demo_1" model="hospital.pharmacy.order.line">
+            <field name="order_id" ref="hospital_pharmacy_order_demo_1"/>
+            <field name="medicine_id" ref="pharmacy.medicine_demo_1"/>
+            <field name="quantity">10</field>
+            <field name="price_unit">15.00</field>
+        </record>
+
+        <record id="hospital_pharmacy_order_line_demo_2" model="hospital.pharmacy.order.line">
+            <field name="order_id" ref="hospital_pharmacy_order_demo_1"/>
+            <field name="medicine_id" ref="pharmacy.medicine_demo_2"/>
+            <field name="quantity">20</field>
+            <field name="price_unit">5.00</field>
+        </record>
+
+    </data>
+</odoo> 

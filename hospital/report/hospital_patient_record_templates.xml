@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="report_patient_record_template">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2 style="text-align:center;">Fiche Patient</h2>
+                        
+                        <!-- Informations du patient -->
+                        <div class="row mt32 mb32">
+                            <div class="col-6">
+                                <h3>Informations Patient</h3>
+                                <p><strong>Nom :</strong> <t t-esc="o.patient_id.name"/></p>
+                                <p><strong>Date de consultation :</strong> <t t-esc="o.consultation_date"/></p>
+                                <p><strong>Médecin :</strong> <t t-esc="o.doctor_id.name"/></p>
+                            </div>
+                        </div>
+
+                        <!-- Symptômes et Diagnostic -->
+                        <div class="row mb32">
+                            <div class="col-12">
+                                <h3>Symptômes observés</h3>
+                                <ul>
+                                    <t t-foreach="o.symptom_ids" t-as="symptom">
+                                        <li><t t-esc="symptom.name"/> - <t t-esc="symptom.description"/></li>
+                                    </t>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="row mb32">
+                            <div class="col-12">
+                                <h3>Diagnostic</h3>
+                                <p><t t-esc="o.diagnosis"/></p>
+                            </div>
+                        </div>
+
+                        <!-- Médicaments prescrits -->
+                        <div class="row mb32">
+                            <div class="col-12">
+                                <h3>Médicaments prescrits</h3>
+                                <table class="table table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>Médicament</th>
+                                            <th>Quantité</th>
+                                            <th>Prix unitaire</th>
+                                            <th>Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="o.ligne_consultation_ids" t-as="line">
+                                            <tr>
+                                                <td><t t-esc="line.ligne_medicament_id.name"/></td>
+                                                <td><t t-esc="line.quantity"/></td>
+                                                <td><t t-esc="line.price_unit"/></td>
+                                                <td><t t-esc="line.sub_total"/></td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="3" class="text-right"><strong>Total</strong></td>
+                                            <td><strong><t t-esc="o.montant_total"/></strong></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Conseils et Action finale -->
+                        <div class="row mb32">
+                            <div class="col-12">
+                                <h3>Conseils médicaux</h3>
+                                <p><t t-esc="o.advice"/></p>
+                            </div>
+                        </div>
+
+                        <div class="row mb32">
+                            <div class="col-12">
+                                <h3>Décision finale</h3>
+                                <p><strong>Action :</strong> 
+                                    <t t-if="o.final_action == 'home'">Rentre à la maison</t>
+                                    <t t-elif="o.final_action == 'hospital'">Hospitalisation</t>
+                                    <t t-else="">Suivi médical</t>
+                                </p>
+                                <t t-if="o.final_action == 'hospital'">
+                                    <p><strong>Durée d'hospitalisation :</strong> <t t-esc="o.days_to_stay"/> jours</p>
+                                </t>
+                                <t t-if="o.final_action == 'follow_up'">
+                                    <p><strong>Date de suivi :</strong> <t t-esc="o.follow_up_date"/></p>
+                                </t>
+                            </div>
+                        </div>
+
+                        <!-- Signature -->
+                        <div class="row mt32">
+                            <div class="col-6">
+                                
+                                <div style="border-top: 1px solid black; width: 200px; margin-top: 50px;">
+                                    <t t-esc="o.doctor_id.name"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo> 

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Menu root -->
+    <menuitem id="hospital_staff_menu_root" name="Personnel médical"/>
+
+    <!-- Action  -->
+    <record id="hospital_staff_doctor_action" model="ir.actions.act_window">
+        <field name="name">Docteurs</field>
+        <field name="res_model">hospital.staff.doctor</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    
+    <record id="hospital_staff_infirmier_action" model="ir.actions.act_window">
+        <field name="name">Infirmier</field>
+        <field name="res_model">hospital.staff.infirmier</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    
+</odoo>

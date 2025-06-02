@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+<record id="view_round_form" model="ir.ui.view">
+    <field name="name">hospital.round.form</field>
+    <field name="model">hospital.round</field>
+    <field name="arch" type="xml">
+    <form string="Ronde infirmière">
+        <sheet>
+        <header>
+             <button 
+                  name="action_print_weekly_report" 
+                  type="object"
+                  string="Exporter PDF" 
+              />
+        </header>
+
+          <group>
+                  <field name="name"/>
+                  <field name="infirmiere_id"/>
+                  <field name="date_round"/>
+                  <field name="line_ids"/>
+          </group>
+        </sheet> 
+    </form>
+  </field>
+</record>
+
+<record id="view_round_list" model="ir.ui.view">
+ <field name="name">hospital.round.list</field>
+  <field name="model">hospital.round</field>
+  <field name="arch" type="xml">
+    <list>
+          <field name="name"/>
+          <field name="infirmiere_id"/>
+          <field name="date_round"/>
+          <field name="line_ids"/>
+    </list>
+  </field>
+</record>
+
+<record id="hospital_action_round" model="ir.actions.act_window">
+  <field name="name">Rondes infirmières</field>
+  <field name="res_model">hospital.round</field>
+  <field name="view_mode">list,form,kanban</field>
+</record>
+
+ <menuitem 
+        id="hospital_round_menu" 
+        name="Ronde infirmière" 
+        action="hospital_action_round"
+        parent="hospital_menu_root" 
+        sequence="7"
+    />
+
+
+
+</odoo>

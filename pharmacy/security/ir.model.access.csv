@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_pharmacy_user,pharmacy.pharmacy.user,model_pharmacy_pharmacy,base.group_user,1,0,0,0
+access_pharmacy_manager,pharmacy.pharmacy.manager,model_pharmacy_pharmacy,base.group_system,1,1,1,1
+access_medicine_user,pharmacy.medicine.user,model_pharmacy_medicine,base.group_user,1,0,0,0
+access_medicine_manager,pharmacy.medicine.manager,model_pharmacy_medicine,base.group_system,1,1,1,1
+access_category_user,pharmacy.category.user,model_pharmacy_category,base.group_user,1,0,0,0
+access_category_manager,pharmacy.category.manager,model_pharmacy_category,base.group_system,1,1,1,1
+access_stock_user,pharmacy.stock.user,model_pharmacy_stock,base.group_user,1,0,0,0
+access_stock_manager,pharmacy.stock.manager,model_pharmacy_stock,base.group_system,1,1,1,1
+access_pharmacy_order_user,pharmacy.order.user,model_pharmacy_order,base.group_user,1,1,1,0
+access_pharmacy_order_manager,pharmacy.order.manager,model_pharmacy_order,base.group_system,1,1,1,1
+access_pharmacy_order_line_user,pharmacy.order.line.user,model_pharmacy_order_line,base.group_user,1,1,1,0
+access_pharmacy_order_line_manager,pharmacy.order.line.manager,model_pharmacy_order_line,base.group_system,1,1,1,1

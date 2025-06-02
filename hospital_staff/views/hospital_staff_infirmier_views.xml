@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+        <!-- Menu enfant -->
+    <menuitem 
+        id="hospital_staff_infirmier_menu" 
+        name="Infirmier" 
+        action="hospital_staff_infirmier_action"
+        parent="hospital_staff_menu_root" 
+    />
+
+    <!-- Vue liste -->
+   <record id="view_hospital_staff_infirmier_list" model="ir.ui.view">
+        <field name="name">hospital.staff.infirmier.list</field>
+        <field name="model">hospital.staff.infirmier</field>
+        <field name="arch" type="xml">
+            <list string="Infirmier">
+                <field name="name"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Vue formulaire -->
+   <record id="view_hospital_staff_infirmier_form" model="ir.ui.view">
+        <field name="name">hospital.staff.infirmier.form</field>
+        <field name="model">hospital.staff.infirmier</field>
+        <field name="arch" type="xml">
+            <form string="Infirmier">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+             </form>
+        </field>
+    </record>
+
+        <!-- Vue de recherche -->
+   <record id="view_hospital_staff_infirmier_search" model="ir.ui.view">
+        <field name="name">hospital.staff.infirmier.search</field>
+        <field name="model">hospital.staff.infirmier</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+             </search>
+        </field>
+    </record>    
+</odoo>

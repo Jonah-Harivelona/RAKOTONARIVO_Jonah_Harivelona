@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <template id="report_round_weekly_template">
+    <t t-foreach="docs" t-as="o">
+      <t t-call="web.html_container">
+        <t t-call="web.external_layout">
+          <div class="page">
+            <h2 style="text-align:center;">Ronde Hebdomadaire de l'Infirmière</h2>
+            <p><strong>Infirmière :</strong> <t t-esc="o.infirmiere_id.name or ''"/></p> 
+            <p><strong>Date :</strong> <t t-esc="o.date_round or ''"/></p> 
+
+            <table class="table table-sm mt32">
+              <thead>
+                <tr>
+                  <th>Patient</th>
+                  <th>Date</th>
+                  <th>État constaté</th>
+                  <th>Observation</th>
+                  <th>Prochaine Ronde</th>
+                </tr>
+              </thead>
+              <tbody>
+                <t t-foreach="o.line_ids" t-as="line">
+                  <tr>
+                    <td><t t-esc="line.patient_id.name or ''"/></td>
+                    <td><t t-esc="o.date_round or ''"/></td>
+                    <td><t t-esc="line.state or ''"/></td>
+                    <td><t t-esc="line.description or ''"/></td>
+                    <td><t t-esc="line.next_round_date or ''"/></td>
+                  </tr>
+                </t>
+              </tbody>
+            </table>
+          </div>
+        </t>
+      </t>
+    </t>
+  </template>
+</odoo>

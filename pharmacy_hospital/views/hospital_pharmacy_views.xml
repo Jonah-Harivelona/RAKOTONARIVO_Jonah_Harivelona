@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Vue formulaire pour les commandes de l'hôpital -->
+    <record id="view_hospital_pharmacy_order_form" model="ir.ui.view">
+        <field name="name">hospital.pharmacy.order.form</field>
+        <field name="model">hospital.pharmacy.order</field>
+        <field name="arch" type="xml">
+            <form string="Commande de médicaments">
+                <header>
+                    <button name="action_send" string="Envoyer à la pharmacie" type="object" 
+                            class="oe_highlight" states="draft"/>
+                    <button name="action_confirm" string="Confirmer" type="object" 
+                            states="sent"/>
+                    <button name="action_done" string="Marquer comme terminée" type="object" 
+                            states="confirmed"/>
+                    <button name="action_cancel" string="Annuler" type="object" 
+                            states="draft,sent,confirmed"/>
+                    <button name="action_draft" string="Remettre en brouillon" type="object" 
+                            states="cancelled"/>
+                    <field name="state" widget="statusbar" 
+                           statusbar_visible="draft,sent,confirmed,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="hospital_id"/>
+                            <field name="pharmacy_id"/>
+                            <field name="date_order"/>
+                            <field name="expected_delivery_date"/>
+                        </group>
+                        <group>
+                            <field name="amount_total"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Lignes de commande">
+                            <field name="order_line_ids">
+                                <tree editable="bottom">
+                                    <field name="medicine_id"/>
+                                    <field name="name"/>
+                                    <field name="quantity"/>
+                                    <field name="price_unit"/>
+                                    <field name="price_subtotal" sum="Total"/>
+                                    <field name="equivalent_medicine_ids" widget="many2many_tags"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Notes">
+                            <field name="notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vue liste pour les commandes de l'hôpital -->
+    <record id="view_hospital_pharmacy_order_tree" model="ir.ui.view">
+        <field name="name">hospital.pharmacy.order.tree</field>
+        <field name="model">hospital.pharmacy.order</field>
+        <field name="arch" type="xml">
+            <tree string="Commandes de médicaments" decoration-info="state == 'draft'" 
+                  decoration-warning="state == 'sent'" decoration-success="state == 'done'" 
+                  decoration-muted="state == 'cancelled'">
+                <field name="name"/>
+                <field name="date_order"/>
+                <field name="hospital_id"/>
+                <field name="pharmacy_id"/>
+                <field name="expected_delivery_date"/>
+                <field name="amount_total" sum="Total"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Vue recherche pour les commandes de l'hôpital -->
+    <record id="view_hospital_pharmacy_order_search" model="ir.ui.view">
+        <field name="name">hospital.pharmacy.order.search</field>
+        <field name="model">hospital.pharmacy.order</field>
+        <field name="arch" type="xml">
+            <search string="Rechercher des commandes">
+                <field name="name"/>
+                <field name="hospital_id"/>
+                <field name="pharmacy_id"/>
+                <filter string="Brouillon" name="draft" domain="[('state', '=', 'draft')]"/>
+                <filter string="Envoyée" name="sent" domain="[('state', '=', 'sent')]"/>
+                <filter string="Confirmée" name="confirmed" domain="[('state', '=', 'confirmed')]"/>
+                <filter string="Terminée" name="done" domain="[('state', '=', 'done')]"/>
+                <filter string="Annulée" name="cancelled" domain="[('state', '=', 'cancelled')]"/>
+                <filter string="En retard" name="late" 
+                        domain="[('expected_delivery_date', '&lt;', context_today().strftime('%Y-%m-%d')),
+                                ('state', 'in', ['sent', 'confirmed'])]"/>
+                <group expand="0" string="Regrouper Par">
+                    <filter string="Hôpital" name="hospital" context="{'group_by': 'hospital_id'}"/>
+                    <filter string="Pharmacie" name="pharmacy" context="{'group_by': 'pharmacy_id'}"/>
+                    <filter string="État" name="state" context="{'group_by': 'state'}"/>
+                    <filter string="Date de commande" name="date" context="{'group_by': 'date_order:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action pour les commandes de l'hôpital -->
+    <record id="action_hospital_pharmacy_order" model="ir.actions.act_window">
+        <field name="name">Commandes de médicaments</field>
+        <field name="res_model">hospital.pharmacy.order</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_hospital_pharmacy_order_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Créer votre première commande de médicaments
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu pour les commandes de l'hôpital -->
+    <menuitem id="menu_hospital_pharmacy_root" 
+              name="Pharmacie" 
+              parent="hospital.menu_hospital_root" 
+              sequence="50"/>
+
+    <menuitem id="menu_hospital_pharmacy_order" 
+              name="Commandes de médicaments" 
+              parent="menu_hospital_pharmacy_root" 
+              action="action_hospital_pharmacy_order" 
+              sequence="1"/>
+
+</odoo> 

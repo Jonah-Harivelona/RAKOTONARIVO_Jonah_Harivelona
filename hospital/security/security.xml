@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Groupe patient -->
+    <record id="group_patient" model="res.groups">
+        <field name="name">Patient</field>
+    </record>
+    <!-- Groupe Médecin qui héritent de Patient -->
+    <record id="group_medecin" model="res.groups">
+        <field name="name">Médecin</field>
+        <field name="implied_ids" eval="[(4, ref('group_patient'))]" />
+    </record>
+</odoo>

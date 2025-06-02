@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+<!-- Action window et menu -->
+    <record id="action_hospital_consultation" model="ir.actions.act_window">
+      <field name="name">Consultation</field>
+      <field name="res_model">hospital.consultation</field>
+      <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_hospital_consultation"
+              name="Consultation"
+              parent="hospital_menu_root"
+              action="action_hospital_consultation"
+              sequence="4"/>
+
+        <!-- Vue list -->
+    <record id="view_hospital_consultation_list" model="ir.ui.view">
+      <field name="name">hospital.consultation.list</field>
+      <field name="model">hospital.consultation</field>
+      <field name="arch" type="xml">
+        <list string="Consultation">
+            <field name="name"/>
+            <field name="doctor_id"/>
+            <field name="patient_id"/>
+            <field name="consultation_date"/>
+            <field name="state"/>
+            <field name="montant_total"/>    
+        </list>
+      </field>
+    </record>
+
+        <!-- Vue form -->
+    <record id="hospital_consultation_form_view" model="ir.ui.view">
+        <field name="name">hospital.consultation.form</field>
+        <field name="model">hospital.consultation</field>
+        <field name="arch" type="xml">
+            <form string="Consultation">
+                <header>
+                    <button name="action_print_patient_record" string="Imprimer Fiche Patient" type="object" class="oe_highlight"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,in_progress,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Référence"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="patient_id"/>
+                            <field name="doctor_id"/>
+                            <field name="consultation_date"/>
+                        </group>
+                        <group>
+                            <field name="montant_total"/>
+                            <field name="final_action"/>
+                            <field name="days_to_stay"/>
+                            <field name="follow_up_date"/> 
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Symptômes et Diagnostic">
+                            <group>
+                                <field name="symptom_ids" widget="many2many_tags"/>
+                                <field name="diagnosis" placeholder="Entrez le diagnostic..."/>
+                            </group>
+                            <group string="Cas similaires" >
+                                <field name="similar_cases" readonly="1"/>
+                            </group>
+                            <group string="Médicaments recommandés">
+                                <field name="recommended_medicaments" readonly="1"/>
+                            </group>
+                        </page>
+                        <page string="Médicaments prescrits">
+                            <field name="ligne_consultation_ids">
+                                <list editable="bottom">
+                                    <field name="ligne_medicament_id"/> 
+                                    <field name="price_unit"/>
+                                    <field name="quantity"/>
+                                    <field name="sub_total"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Conseils et Suivi">
+                            <group>
+                                <field name="advice" placeholder="Entrez les conseils médicaux..."/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+  
+
+</odoo>

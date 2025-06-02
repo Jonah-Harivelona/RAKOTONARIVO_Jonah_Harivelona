@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+        <!-- Menu enfant -->
+    <menuitem 
+        id="hospital_staff_doctor_menu" 
+        name="Docteurs" 
+        action="hospital_staff_doctor_action"
+        parent="hospital_staff_menu_root" 
+    />
+
+    <!-- Vue liste -->
+   <record id="view_hospital_staff_doctor_list" model="ir.ui.view">
+        <field name="name">hospital.staff.doctor.list</field>
+        <field name="model">hospital.staff.doctor</field>
+        <field name="arch" type="xml">
+            <list string="Docteurs">
+                <field name="name"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Vue formulaire -->
+   <record id="view_hospital_staff_doctor_form" model="ir.ui.view">
+        <field name="name">hospital.staff.doctor.form</field>
+        <field name="model">hospital.staff.doctor</field>
+        <field name="arch" type="xml">
+            <form string="Docteur">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+             </form>
+        </field>
+    </record>
+
+        <!-- Vue de recherche -->
+   <record id="view_hospital_staff_doctor_search" model="ir.ui.view">
+        <field name="name">hospital.staff.doctor.search</field>
+        <field name="model">hospital.staff.doctor</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+             </search>
+        </field>
+    </record>    
+</odoo>

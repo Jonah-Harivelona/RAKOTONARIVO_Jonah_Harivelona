@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Vue formulaire pour les commandes -->
+    <record id="view_pharmacy_order_form" model="ir.ui.view">
+        <field name="name">pharmacy.order.form</field>
+        <field name="model">pharmacy.order</field>
+        <field name="arch" type="xml">
+            <form string="Commande">
+                <header>
+                    <button name="action_confirm" string="Confirmer" type="object" 
+                            class="oe_highlight"/>
+                    <button name="action_done" string="Marquer comme terminée" type="object"/>
+                    <button name="action_cancel" string="Annuler" type="object"/>
+                    <button name="action_draft" string="Remettre en brouillon" type="object" />
+                    <field name="state" widget="statusbar" 
+                           statusbar_visible="draft,confirmed,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="pharmacy_id"/>
+                            <field name="partner_id"/>
+                            <field name="date_order"/>
+                        </group>
+                        <group>
+                            <field name="amount_total"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Lignes de commande">
+                            <field name="order_line_ids">
+                                <list editable="bottom">
+                                    <field name="medicine_id"/>
+                                    <field name="name"/>
+                                    <field name="quantity"/>
+                                    <field name="price_unit"/>
+                                    <field name="price_subtotal" sum="Total"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vue liste pour les commandes -->
+    <record id="view_pharmacy_order_list" model="ir.ui.view">
+        <field name="name">pharmacy.order.list</field>
+        <field name="model">pharmacy.order</field>
+        <field name="arch" type="xml">
+            <list string="Commandes" decoration-info="state == 'draft'" 
+                  decoration-success="state == 'done'" decoration-muted="state == 'cancelled'">
+                <field name="name"/>
+                <field name="date_order"/>
+                <field name="pharmacy_id"/>
+                <field name="partner_id"/>
+                <field name="amount_total" sum="Total"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Vue recherche pour les commandes -->
+    <record id="view_pharmacy_order_search" model="ir.ui.view">
+        <field name="name">pharmacy.order.search</field>
+        <field name="model">pharmacy.order</field>
+        <field name="arch" type="xml">
+            <search string="Rechercher des commandes">
+                <field name="name"/>
+                <field name="pharmacy_id"/>
+                <field name="partner_id"/>
+                <filter string="Brouillon" name="draft" domain="[('state', '=', 'draft')]"/>
+                <filter string="Confirmée" name="confirmed" domain="[('state', '=', 'confirmed')]"/>
+                <filter string="Terminée" name="done" domain="[('state', '=', 'done')]"/>
+                <filter string="Annulée" name="cancelled" domain="[('state', '=', 'cancelled')]"/>
+                <group expand="0" string="Regrouper Par">
+                    <filter string="Pharmacie" name="pharmacy" context="{'group_by': 'pharmacy_id'}"/>
+                    <filter string="Client" name="partner" context="{'group_by': 'partner_id'}"/>
+                    <filter string="État" name="state" context="{'group_by': 'state'}"/>
+                    <filter string="Date de commande" name="date" context="{'group_by': 'date_order:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action pour les commandes -->
+    <record id="action_pharmacy_order" model="ir.actions.act_window">
+        <field name="name">Commandes</field>
+        <field name="res_model">pharmacy.order</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_pharmacy_order_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Créer votre première commande
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu pour les commandes -->
+    <menuitem id="menu_pharmacy_order" 
+              name="Commandes" 
+              parent="menu_pharmacy_root" 
+              action="action_pharmacy_order" 
+              sequence="3"/>
+
+</odoo> 

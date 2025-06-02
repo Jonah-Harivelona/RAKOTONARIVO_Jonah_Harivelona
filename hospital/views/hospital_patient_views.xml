@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+        <!-- Menu root -->
+    <menuitem id="hospital_menu_root" name="Hôpital"/>
+
+        <!-- Action  -->
+    <record id="hospital_patient_action" model="ir.actions.act_window">
+        <field name="name">Patients</field>
+        <field name="res_model">hospital.patient</field>
+        <field name="view_mode">list,form</field>
+    </record>
+        <!-- Menu enfant -->
+    <menuitem 
+        id="hospital_patient_menu" 
+        name="Patients" 
+        action="hospital_patient_action"
+        parent="hospital_menu_root" 
+        sequence="1"
+    />
+
+    <!-- Vue liste -->
+   <record id="view_hospital_patient_list" model="ir.ui.view">
+        <field name="name">hospital.patient.list</field>
+        <field name="model">hospital.patient</field>
+        <field name="arch" type="xml">
+            <list string="Patients">
+                <field name="name"/>
+                <field name="doctor_id"/>
+                <field name="symptom_ids"/>
+                <!-- <field name="request_ids"/>  -->
+                <!-- <field name="state"/>
+                <field name="is_retained"/> -->
+                <!-- <field name="round_ids"/>  -->
+            </list>
+        </field>
+    </record>
+
+    <!-- Vue formulaire -->
+   <record id="view_hospital_patient_form" model="ir.ui.view">
+        <field name="name">hospital.patient.form</field>
+        <field name="model">hospital.patient</field>
+        <field name="arch" type="xml">
+            <form string="Patient">
+                <sheet>
+                    <group>
+                        <field name="request_ids"/> 
+                        <field name="state"/> 
+                        <field name="is_retained"/>
+                        <!-- <field name="round_ids"/>  -->
+                    </group>   
+                </sheet>
+             </form>
+        </field>
+    </record>
+
+
+        <!-- Vue de recherche -->
+   <record id="view_hospital_patient_search" model="ir.ui.view">
+        <field name="name">hospital.patient.search</field>
+        <field name="model">hospital.patient</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+             </search>
+        </field>
+    </record>
+
+   
+
+   
+        
+</odoo>

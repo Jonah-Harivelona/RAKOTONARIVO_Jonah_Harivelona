@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Menu principal -->
+    <menuitem id="menu_pharmacy_root"
+              name="Pharmacie"
+              sequence="10"/>
+
+    <!-- Menu Stock -->
+    <menuitem id="menu_pharmacy_stock"
+              name="Stock"
+              parent="menu_pharmacy_root"
+              sequence="10"/>
+
+    <menuitem id="menu_pharmacy_medicine"
+              name="Médicaments"
+              parent="menu_pharmacy_stock"
+              action="action_pharmacy_medicine"
+              sequence="10"/>
+<!-- 
+    <menuitem id="menu_pharmacy_stock_management"
+              name="Gestion des stocks"
+              parent="menu_pharmacy_stock"
+              action="action_pharmacy_stock"
+              sequence="20"/> -->
+
+    <!-- Menu Configuration -->
+    <!-- <menuitem id="menu_pharmacy_configuration"
+              name="Configuration"
+              parent="menu_pharmacy_root"
+              sequence="100"/>
+
+    <menuitem id="menu_pharmacy_pharmacy"
+              name="Pharmacies"
+              parent="menu_pharmacy_configuration"
+              action="action_pharmacy_pharmacy"
+              sequence="10"/> -->
+</odoo> 

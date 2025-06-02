@@ -47,3 +47,39 @@ Ce projet Odoo regroupe quatre modules principaux permettant de gérer un hôpit
 1. **Cloner le dépôt**  
    ```bash
    git clone https://github.com/Jonah-Harivelona/RAKOTONARIVO_Jonah_Harivelona.git
+
+2. Copier les modules dans l’arborescence Odoo
+Par exemple, si ton Odoo local utilise le dossier odoo/addons/, fais :
+
+bash
+cp -r RAKOTONARIVO_Jonah_Harivelona/* /chemin/vers/ton/odoo/addons/
+
+Vérifier que le fichier __manifest__.py de chaque module contient bien depends sur les modules requis (ex. base, web, mail, report, etc.).
+
+Démarrer le serveur Odoo
+
+bash
+cd /chemin/vers/ton/odoo
+./odoo-bin -d nom_de_ta_base --addons-path=/chemin/vers/ton/odoo/addons
+Installer les modules dans l’interface
+
+Connecte-toi à Odoo en tant qu’admin.
+
+Va dans Applications, clique sur Mettre à jour la liste des modules, puis recherche :
+
+hospital
+
+pharmacy
+
+hospital_pharmacy
+
+hospital_staff
+
+Pour chacun, clique sur Installer.
+
+👤 Auteur
+Nom : RAKOTONARIVO Jonah Harivelona
+Formation : Electronique Système Informatique et Intelligence Artificielle
+
+📜 Licence
+Ce projet est sous licence LGPL-3.
